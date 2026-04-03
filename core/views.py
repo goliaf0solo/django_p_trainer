@@ -6,5 +6,5 @@ from django.http import HttpResponse
 
 def returning_greetings(request):
 
-    return HttpResponse('Hello!')
+    return render(request, "greeting.html")
 
