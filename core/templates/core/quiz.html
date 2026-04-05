@@ -1,0 +1,52 @@
+{% extends "core/base.html" %}
+
+{% block pagetitle %} Задание: {{ exercise.topic }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4" style="max-width: 700px;">
+
+    <a href="{% url 'home' %}" class="btn btn-outline-secondary mb-3">Назад к списку</a>
+
+    <div class="card">
+        <div class="card-header bg-dark text-white">
+            <h4 class="mb-0">{{ exercise.topic }}</h4>
+        </div>
+        <div class="card-body">
+            <p class="lead">{{ exercise.question }}</p>
+            
+            {% if message %}
+                <div class="alert {% if is_correct %} alert-success {% else %} alert-danger {% endif %} mt-3">
+                    {{ message }}
+                </div>
+            {% endif %}
+        
+            <hr>
+        
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="user_answer" class="form-label">
+                        Твой ответ:
+                    </label>
+                    <input 
+                        type="text" 
+                        name="user_answer" 
+                        id="user_answer" 
+                        class="form-control" 
+                        placeholder="Введите ответ..."
+                        maxlength="100"
+                        required
+                    >
+                    {% for error in form.user_answer.errors %}
+                        <div class="text-danger small mt-1">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                <button type="submit" class="btn btn-success">Проверить ответ</button>
+            </form>
+        
+        </div>
+    </div>
+
+</div>    
+    
+{% endblock %}

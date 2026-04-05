@@ -1,0 +1,34 @@
+{% extends "core/base.html" %}
+
+{% block pagetitle %} Список заданий {% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2> 📖 Доступные задания 📖 </h2>
+    
+    <div class="row mt-3">
+        {% for ex in exercises %}
+        <div class="col-md-6 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ ex.topic }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        Сложность: {{ ex.get_difficulty_display }}
+                    </h6>
+                    <p class="card-text">{{ ex.question }}</p>
+                    <a href="{% url 'quiz' ex.id %}" class="btn btn-primary">
+                        Решить задание
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-warning">
+                заданий пока нет. Нужно добавить их через <a href="/admin/">админку</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>    
+{% endblock %}
