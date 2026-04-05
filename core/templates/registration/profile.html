@@ -1,22 +1,102 @@
-{% extends 'core/base.html' %}
+{% extends "core/base.html" %}
 
-{% block pagetitle %} Мой профиль {% endblock %}
+{% block pagetitle %}Мой прогресс{% endblock %}
 
 {% block content %}
 <div class="container mt-5">
-    <div class="card">
-        <div class="card-header bg-info text-white">
-            <h3>Привет, {{ user.username }} 🫰</h3>
+    <h2>Привет, {{ user.username }}! 🫰</h2>
+
+    <div class="row mt-4">
+        <div class="col-md-3 mb-3">
+            <div class="card text-center bg-success text-white h-100">
+                <div class="card-body">
+                    <h3>{{ solved_count }}</h3>
+                    <p>Решено заданий</p>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-            <p>Это твой личный кабинет.</p>
-            <p>Здесь будет статистика твоих успехов 📊 (в следующих версиях).</p>
-            <hr>
-            <form action="{% url 'logout' %}" method="post">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-danger">Выйти из аккаунта</button>
-            </form>
+        
+        <div class="col-md-3 mb-3">
+            <div class="card text-center bg-primary text-white h-100">
+                <div class="card-body">
+                    <h3>{{ total_attempts }}</h3>
+                    <p>Всего попыток</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3 mb-3">
+            <div class="card text-center bg-info text-white h-100">
+                <div class="card-body">
+                    <h3>{{ correct_count }}</h3>
+                    <p>Верных ответов</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3 mb-4">
+            <div class="col-md-4 mb-3">
+                <div class="card text-center bg-success text-white h-100">
+                    <div class="card-body">
+                        <h3>{{ easy_solved|default:"0" }}</h3>
+                        <p>Лёгких</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card text-center bg-warning text-dark h-100">
+                    <div class="card-body">
+                        <h3>{{ medium_solved|default:"0" }}</h3>
+                        <p>Средних</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card text-center bg-danger text-white h-100">
+                    <div class="card-body">
+                        <h3>{{ hard_solved|default:"0" }}</h3>
+                        <p>Сложных</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>    
+
+    <h4 class="mt-4">История попыток:</h4>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Задание</th>
+                    <th>Результат</th>
+                    <th>Дата</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for attempt in attempts %}
+                <tr>
+                    <td>{{ attempt.exercise.question|truncatechars:50 }}</td>
+                    <td>
+                        {% if attempt.is_correct %}
+                            <span class="badge bg-success">Верно</span>
+                        {% else %}
+                            <span class="badge bg-danger">Ошибка</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ attempt.created_at|date:"d.m H:i" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3" class="text-center text-muted">Пока нет попыток.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <form action="{% url 'logout' %}" method="post" class="mt-4">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-danger">Выйти</button>
+    </form>
+</div>
 {% endblock %}

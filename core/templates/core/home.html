@@ -5,20 +5,32 @@
 {% block content %}
 <div class="container mt-4">
     <h2> 📖 Доступные задания 📖 </h2>
-    
-    <div class="row mt-3">
+
+        <div class="row mt-3">
         {% for ex in exercises %}
         <div class="col-md-6 mb-3">
-            <div class="card h-100">
+            <div class="card h-100 {% if ex.is_solved %}border-success{% endif %}">
                 <div class="card-body">
-                    <h5 class="card-title">{{ ex.topic }}</h5>
+                    <div class="d-flex justify-content-between align-items-start">
+                        <h5 class="card-title">{{ ex.topic }}</h5>
+                        {% if ex.is_solved %}
+                            <span class="badge bg-success">✓ Решено</span>
+                        {% endif %}
+                    </div>
                     <h6 class="card-subtitle mb-2 text-muted">
                         Сложность: {{ ex.get_difficulty_display }}
                     </h6>
                     <p class="card-text">{{ ex.question }}</p>
-                    <a href="{% url 'quiz' ex.id %}" class="btn btn-primary">
-                        Решить задание
-                    </a>
+                
+                    {% if ex.is_solved %}
+                        <a href="{% url 'quiz' ex.id %}" class="btn btn-outline-success">
+                            🔄 Решить ещё раз 🔄
+                        </a>
+                    {% else %}
+                        <a href="{% url 'quiz' ex.id %}" class="btn btn-primary">
+                            Решить задание
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -30,5 +42,5 @@
         </div>
         {% endfor %}
     </div>
-</div>    
+</div>
 {% endblock %}
