@@ -1,0 +1,13 @@
+[MASTER]
+load-plugins=pylint_django
+django-settings-module=config.settings
+
+[MESSAGES CONTROL]
+# Отключаем шум, который не важен для учебного проекта
+disable=C0114,C0115,C0116,R0903,W0511,C0301,R0914,R0912
+
+[FORMAT]
+max-line-length=119
+
+[BASIC]
+good-names=i,j,k,ex,Run,_
