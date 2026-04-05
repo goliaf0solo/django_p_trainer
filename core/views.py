@@ -37,6 +37,6 @@ def quiz(request, exercise_id):
         'is_correct': is_correct,
     }
 
-    return render(request, 'core/quiz.html')
+    return render(request, 'core/quiz.html', context)
 
 
