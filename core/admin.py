@@ -3,6 +3,7 @@ from .models import Exercise
 
 # Register your models here.
 
+
 @admin.register(Exercise)
 class ExerciseAdmin(admin.ModelAdmin):
     list_display = ['topic', 'question', 'answer', 'difficulty', 'created_at']
