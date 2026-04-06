@@ -98,8 +98,8 @@ python seed.py
 ## Технологический стек
 *   *Backend:* Python 3.x, Django 4.2+
 *   *Database:* SQLite (Django ORM)
-*   *Frontend:* HTML5, Jinja2 Templates, Bootstrap 5
-*   *Tools:* Git, Pytest (опционально), Pylint
+*   *Frontend:* HTML5, Django Templates, Bootstrap 5
+*   *Tools:* Git, Pylint
 
 ---
 
