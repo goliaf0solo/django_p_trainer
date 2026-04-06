@@ -23,7 +23,7 @@
 
 ```bash
 # Клонирование
-git clone https://github.com/твой-username/django_p_trainer.git
+git clone https://github.com/goliaf0solo/django_p_trainer.git
 cd django_p_trainer
 
 # Создание venv
